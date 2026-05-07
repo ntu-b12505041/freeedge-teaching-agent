@@ -1,0 +1,9 @@
+.env
+.deps/
+.venv/
+.tmp_pip/
+output/
+tools/
+registration-info.md
+__pycache__/
+*.pyc
