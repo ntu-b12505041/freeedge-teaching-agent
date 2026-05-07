@@ -20,7 +20,16 @@ def health() -> dict[str, str]:
     return {"status": "ok"}
 
 
-@app.post("/", response_model=TeachingResponse)
+@app.get("/")
+def root_health() -> dict[str, str]:
+    return {"status": "ok", "endpoint": "/generate"}
+
+
+@app.post("/")
+def root_ping() -> dict[str, str]:
+    return {"status": "ok", "endpoint": "/generate"}
+
+
 @app.post("/generate", response_model=TeachingResponse)
 @app.post("/api/generate", response_model=TeachingResponse)
 def generate(req: TeachingRequest, request: Request) -> TeachingResponse:
