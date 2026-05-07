@@ -8,6 +8,8 @@ services:
     healthCheckPath: /health
     autoDeploy: true
     envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.7"
       - key: TTS_PROVIDER
         value: edge
       - key: EDGE_TTS_VOICE
