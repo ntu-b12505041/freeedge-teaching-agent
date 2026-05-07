@@ -14,8 +14,8 @@ from app.pipeline import generate_teaching_assets
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:
         parsed = urlparse(self.path)
-        if parsed.path == "/health":
-            self._json({"status": "ok"})
+        if parsed.path in {"/", "/health"}:
+            self._json({"status": "ok", "endpoint": "/generate"})
             return
         if parsed.path.startswith("/static/"):
             self._file(parsed.path.removeprefix("/static/"))
@@ -24,7 +24,10 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self) -> None:
         parsed = urlparse(self.path)
-        if parsed.path not in {"/", "/generate", "/api/generate"}:
+        if parsed.path == "/":
+            self._json({"status": "ok", "endpoint": "/generate"})
+            return
+        if parsed.path not in {"/generate", "/api/generate"}:
             self.send_error(HTTPStatus.NOT_FOUND)
             return
         length = int(self.headers.get("Content-Length", "0"))
